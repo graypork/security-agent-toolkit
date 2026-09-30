@@ -1,0 +1,11 @@
+09:01,kim01,login_ok,10.0.3.21
+09:03,lee02,login_fail,10.0.7.5
+03:22,hacker
+09:05,admin,LOGIN_FAIL,10.0.9.8
+09:12,admin,login_fail,10.0.9.8
+02:40,hacker,login_fail,10.0.9.9
+09:18,lee02,login_fail,10.0.7.5
+09:21,admin,login_fail,10.0.9.8
+09:24,park03,LOGIN_OK,10.0.4.11
+09:41,guest
+09:45,kim01,login_ok,10.0.3.21
