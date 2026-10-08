@@ -2,6 +2,36 @@
 
 보안 로그를 입력받아 **정규화 → 탐지 → 경보 처리 → LLM 요약 → 보고서 생성 → 알림**까지 연결한 보안 에이전트 실습 코드입니다.
 
+## 처리 흐름
+
+```mermaid
+flowchart LR
+    A[원본 보안 로그<br/>CSV / TXT] --> B[로그 파싱 · 정규화<br/>log_parser.py<br/>normalize_logs.py]
+    B --> C[정규화 로그<br/>normalized_logs.json]
+    C --> D[탐지 규칙 실행<br/>로그인 실패 집계 · 임계값 판정]
+    D --> E[중복 경보 방지<br/>processed_ids.json]
+    E --> F[보안 이벤트]
+
+    C --> G[Agent Tools<br/>실패 횟수 조회 · IP 조회]
+    G --> F
+
+    F --> H[LLM 경보 요약<br/>llm_client.py<br/>event_summarizer.py]
+    H --> I[위험도 정렬<br/>high → medium → low]
+    I --> J[보고서 생성<br/>report_generator.py]
+    J --> K[Markdown 일일 보고서]
+
+    I --> L[승인 필요 여부 판정<br/>notifier.py]
+    L --> M[Webhook 알림]
+
+    N[config.json] --> H
+    N --> L
+
+    O[scheduler_job.py] --> D
+    P[pipeline.py] --> H
+    P --> J
+    P --> L
+```
+
 ## 구현 내용
 
 1. **로그 처리**
